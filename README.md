@@ -32,6 +32,8 @@ Usar diferentes querys que estan en el archivo h2.sql
 
 
 NOTAS:
+- La Carpeta frontend es donde estan las pagina que interactuaran con el back
+- Si algo, esta es la collection https://www.getpostman.com/collections/3d07f19f003c899547e7
 - Debido a que tenia la version 4.9.0 de STS, tuve que usar jdk 11 
 - Los paquetes estan relacionados con MVC
 - Se usa jooq como orm(Aunque tambien se hubiese podido utilizar Hibernate o consultas directas al jdbc)
