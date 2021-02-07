@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        async function load() {
+            let config = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            };
+
+            try {
+                let response = await fetch('http://localhost:8080/valid/users/get', config)
+                let json = await response.json()
+                var html = "<table><tbody>";
+                for (var i = 0; i < json.length; i++) {
+                    html += "<tr>";
+                    html += "<td><input type='checkbox' value=" + json[i].id + " name='ids'/></td>"
+                    html += "<td>" + json[i].id + "</td>"
+                    html += "<td>" + json[i].name + "</td>"
+                    html += "<td>" + json[i].lastName + "</td>"
+                    html += "<td>" + json[i].process + "</td>"
+                    html += "</tr>"
+                }
+                html += "</tbody></table>";
+                document.getElementById("valid").innerHTML = html;
+            } catch (err) {
+                alert("Error ==> ", err)
+            }
+        }
+        load();
+
+        async function process(config) {
+            fetch('http://localhost:8080/valid/users/process', config).then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Something went wrong');
+                }
+            })
+                .then((responseJson) => {
+                    alert(responseJson.message);
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+        }
+
+        $(document).ready(function () {
+            $("button").click(function () {
+                var favorite = [];
+                $.each($("input[name='ids']:checked"), function () {
+                    favorite.push(parseInt($(this).val()));
+                });
+                if(favorite.length == 0){
+                    alert("selected checks cannot be empty");
+                }
+                let config = {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ "toProcess": favorite })
+                };
+                process(config);
+                document.getElementById("valid").innerHTML = "<table></table>";
+                load();                
+            });
+        });
+    </script>
+    <form>
+        <table id="valid"></table>
+        <button type="button">Process</button>
+    </form>
+</body>
+
+</html>
