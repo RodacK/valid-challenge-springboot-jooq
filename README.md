@@ -10,7 +10,7 @@ para eliminar fuentes generadas
 
 ------------Copia de archivos base de la BD---------------
 
-Estos archivos se necesitan para levantar el server de H2
+Estos archivos se necesitan para levantar el server de H2 (ver carpeta Archivos necesarios)
 
 1- Copiar el contenido de basebd.rar en el home de su usuario
 
